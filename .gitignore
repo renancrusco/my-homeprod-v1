@@ -1,1 +1,23 @@
 media/
+
+# Dados de serviços (NÃO versionar)
+**/work/
+**/data/
+**/db/
+**/logs/
+**/log/
+**/Backups/
+**/backup/
+**/asp/
+*.db
+*.db-shm
+*.db-wal
+*.pid
+*.txt
+*.dat
+*.json
+analytics_visitor_id.txt
+announcements.json
+releases.txt
+throttled_providers.dat
+glance/.env
