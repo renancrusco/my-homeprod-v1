@@ -1,0 +1,292 @@
+version: '3.8'
+
+services:
+  # ============================================
+  # 1. HOMEPAGE DASHBOARD
+  # ============================================
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - "8090:3000"
+    volumes:
+      - ./homepage-config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./homepage-config/images:/app/public/images
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - HOMEPAGE_ALLOWED_HOSTS=192.168.68.52:8090,localhost:8090,127.0.0.1:8090,0.0.0.0:8090
+    restart: unless-stopped
+    networks:
+      - homelab-net
+
+  # ============================================
+  # 2. ADGUARD HOME (DNS + Bloqueador)
+  # ============================================
+  adguardhome:
+    image: adguard/adguardhome:latest
+    container_name: adguardhome
+    ports:
+      - "53:53/tcp"              # DNS
+      - "53:53/udp"              # DNS
+      - "3000:3000/tcp"          # Interface Web (configuração)
+      - "443:443/tcp"            # DNS-over-HTTPS (futuro)
+      - "853:853/tcp"            # DNS-over-TLS (futuro)
+    volumes:
+      - ./adguard-config/work:/opt/adguardhome/work
+      - ./adguard-config/conf:/opt/adguardhome/conf
+    environment:
+      - TZ=America/Sao_Paulo
+    restart: unless-stopped
+    networks:
+      - homelab-net
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+
+  # ============================================
+  # 3. QBITTORRENT
+  # ============================================
+  qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    ports:
+      - "8080:8080"              # Interface Web
+      - "6881:6881"              # Porta TCP
+      - "6881:6881/udp"          # Porta UDP
+    volumes:
+      - ./qbittorrent-config:/config
+      - ./media:/media
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - WEBUI_PORT=8080
+      - WEBUI_PASSWORD=PM6b5bQkr@9NyL2    
+    restart: unless-stopped
+    networks:
+      - homelab-net
+
+  # ============================================
+  # 4. PORTAINER (Opcional - Gerenciador Docker)
+  # ============================================
+  portainer:
+    image: portainer/portainer-ce:lts
+    container_name: portainer
+    ports:
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer-data:/data
+    restart: unless-stopped
+    networks:
+      - homelab-net
+
+  # ============================================
+  # JELLYFIN - Servidor de Mídia
+  # ============================================
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    ports:
+      - "8096:8096"          # Interface Web
+      - "8920:8920"          # HTTPS (opcional)
+    volumes:
+      - ./jellyfin-config:/config
+      - ./media:/media       # ← Pasta principal de mídia
+      - ./media/movies:/media/movies
+      - ./media/series:/media/series
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    restart: unless-stopped
+    networks:
+      - homelab-net
+
+  # ============================================
+  # SAMBA (SMB) - Compartilhamento de Arquivos
+  # ============================================
+  samba:
+    image: dockurr/samba:latest
+    container_name: samba
+    ports:
+      - "445:445"
+      - "139:139"
+    environment:
+      - NAME=Media
+      - USER=khrusko
+      - PASS=rcr40133  # Troque pela sua senha
+      - UID=1000
+      - GID=1000
+    volumes:
+      - ./media:/storage
+    restart: unless-stopped
+    networks:
+      - homelab-net
+
+  # ============================================
+  # SONARR - Séries
+  # ============================================
+  sonarr:
+    image: ghcr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    ports:
+      - "8989:8989"
+    volumes:
+      - ./sonarr-config:/config
+      - ./media:/media
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    restart: unless-stopped
+    networks:
+      - homelab-net
+
+  # ============================================
+  # RADARR - Filmes
+  # ============================================
+  radarr:
+    image: ghcr.io/linuxserver/radarr:latest
+    container_name: radarr
+    ports:
+      - "7878:7878"
+    volumes:
+      - ./radarr-config:/config
+      - ./media:/media
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    restart: unless-stopped
+    networks:
+      - homelab-net
+
+  # ============================================
+  # PROWLARR - Gerenciador de Indexadores
+  # ============================================
+  prowlarr:
+    image: ghcr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    ports:
+      - "9696:9696"
+    volumes:
+      - ./prowlarr-config:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    restart: unless-stopped
+    networks:
+      - homelab-net
+  # ============================================
+  # FLARESOLVERR - DNS para suite `ARR
+  # ============================================ 
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - CAPTCHA_SOLVER=none
+    ports:
+      - "8191:8191"
+    restart: unless-stopped
+    networks:
+      - homelab-net
+
+  # ============================================
+  # BAZARR - Legendas
+  # ============================================ 
+  bazarr:
+    image: linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    volumes:
+      - ./bazarr-config:/config
+      - ./media:/media
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+    networks:
+      - homelab-net
+
+  # ============================================
+  # JELLYSEER - Buscador de paradinhas
+  # ============================================ 
+  seerr:
+    image:  ghcr.io/seerr-team/seerr:latest
+    container_name: seerr
+    ports:
+      - 5055:5055
+    volumes:
+      - ./jellyseerr-config:/app/config
+    environment:
+      - LOG_LEVEL=info
+      - PORT=5055
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    restart: unless-stopped
+    networks:
+      - homelab-net
+  # ============================================
+  # POSTGRES - peguei para o ReactiveResume
+  # ============================================ 
+  postgres:
+    image: postgres:17
+    container_name: resume-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    volumes:
+      - ./reactive-resume/postgres:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    networks:
+      - homelab-net
+  # ============================================
+  # REACTRESUME - editor de curriculo
+  # ============================================
+  reactive-resume:
+    image: amruthpillai/reactive-resume:latest
+    container_name: reactive-resume
+
+    restart: unless-stopped
+
+    ports:
+      - "3010:3000"
+
+    env_file:
+      - reactive-resume/.env
+
+    volumes:
+      - ./reactive-resume/data:/app/data
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    networks:
+      - homelab-net  
+
+#=============================================
+# REDE COMPARTILHADA
+# ============================================
+networks:
+  homelab-net:
+    driver: bridge

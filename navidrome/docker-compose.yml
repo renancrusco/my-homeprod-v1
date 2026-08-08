@@ -1,0 +1,16 @@
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    restart: unless-stopped
+    ports:
+      - "4050:4533"  # Mapeia a porta 4050 do seu servidor para a porta 4533 do container
+    volumes:
+      - ./data:/data   # Monta a pasta local 'data' para dentro do container como /data
+      - /home/khrusko/homelab/media/music:/music:ro  # Monta a pasta 'music' como somente leitura (:ro)
+    environment:
+      - ND_SCANSCHEDULE=1h  # Escaneia a biblioteca a cada hora
+      - ND_LOGLEVEL=info    # Nível de log (info, debug, error)
+      - ND_PORT=4533        # Porta interna do servidor (não precisa mudar)
+      - ND_BASEURL=/        # URL base do serviço
+    user: 1000:1000  # Importante: roda o container com seu UID/GID para evitar problemas de permissão

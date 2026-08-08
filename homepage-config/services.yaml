@@ -1,0 +1,89 @@
+---
+- Infrastructure:
+    - AdGuard Home:
+        icon: https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/adguard.svg
+        href: http://192.168.68.52:3000
+        description: DNS + Bloqueador de anúncios
+        widget:
+          type: adguard
+          url: http://192.168.68.52:3000
+          username: admin
+          password: "hNArI8wx8U7Xl7"
+
+    - Portainer:
+        icon: portainer.png
+        href: https://192.168.68.52:9443
+        widget:
+          type: portainer
+          url: https://192.168.68.52:9443
+          env: 3
+          key: ptr_EZrR4Vci1HXTAit4n6/hFiwV4TcsWFGNm+lIzI0DG+E=
+
+- Media:
+    - Jellyfin:
+        icon: jellyfin.png
+        href: http://192.168.68.52:8096
+        description: Servidor de mídia
+        widget:
+          type: jellyfin
+          url: http://192.168.68.52:8096
+          key: "54993caec94545bab4a83121d6607c1f"
+
+    - qBittorrent:
+        icon: qbittorrent.png
+        href: http://192.168.68.52:8080
+        description: Cliente de torrent
+        widget:
+          type: qbittorrent
+          url: http://192.168.68.52:8080
+          username: admin
+          password: "PM6b5bQkr@9NyL2"
+
+    - Bazarr:
+        icon: bazarr.png
+        href: http://192.168.68.52:6767
+        description: Legendas automáticas
+
+- Automation:
+    - Sonarr:
+        icon: sonarr.png
+        href: http://192.168.68.52:8989
+        description: Séries
+        widget:
+          type: sonarr
+          url: http://192.168.68.52:8989
+          key: "027795c9b07b4d109d65987b5bc01ab1"
+
+    - Radarr:
+        icon: radarr.png
+        href: http://192.168.68.52:7878
+        description: Filmes
+        widget:
+          type: radarr
+          url: http://192.168.68.52:7878
+          key: "a97d2b3876e940c7a357196cb57de293"
+
+    - Prowlarr:
+        icon: prowlarr.png
+        href: http://192.168.68.52:9696
+        description: Indexadores
+
+    - Jellyseerr:
+        icon: jellyseerr.png
+        href: http://192.168.68.52:5055
+        description: Catálogo + Pedidos
+
+- Tools:
+    - Reactive Resume:
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/reactive-resume-light.svg
+        href: http://192.168.68.52:3010
+    - Immch:
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg
+        href: http://192.168.68.52:2283
+    - Paperless:
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/paperless.svg
+        href: http://192.168.68.52:8010
+    - Navidrome:
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/navidrome.svg
+        href: http://192.168.68.52:4050
+    
