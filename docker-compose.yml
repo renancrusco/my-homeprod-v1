@@ -217,7 +217,7 @@ services:
       - homelab-net
 
   # ============================================
-  # JELLYSEER - Buscador de paradinhas
+  # JELLYSEER - Interface para request do midia server
   # ============================================ 
   seerr:
     image:  ghcr.io/seerr-team/seerr:latest
@@ -236,7 +236,7 @@ services:
     networks:
       - homelab-net
   # ============================================
-  # POSTGRES - peguei para o ReactiveResume
+  # POSTGRES - Banco de dados do Reactive Resume
   # ============================================ 
   postgres:
     image: postgres:17

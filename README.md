@@ -93,17 +93,19 @@ homelab/
 |---------|-------|-----------|
 | **AdGuard Home** | `53`, `3000` | DNS Ad-blocker |
 | **Jellyfin** | `8096` | Media Server |
-| **Jellyseerr** | `5055` | Gerenciador de requests |
+| **Seerr** | `5055` | Gerenciador de requests |
 | **Sonarr** | `8989` | Gerenciador de séries |
 | **Radarr** | `7878` | Gerenciador de filmes |
 | **Bazarr** | `6767` | Legendas |
 | **Prowlarr** | `9696` | Indexador de torrents |
+| **Flaresolverr** | `8191` | DNS parasuite 'ARR |
 | **qBittorrent** | `8080` | Cliente Torrent |
-| **Homepage** | `3001` | Dashboard |
+| **Homepage** | `8090` | Dashboard |
 | **Navidrome** | `4533` | Servidor de música |
-| **Portainer** | `9000` | Gerenciador Docker |
+| **Portainer** | `9443` | Gerenciador Docker |
 | **Glance** | `8081` | Painel de monitoramento |
 | **Reactive Resume** | `3002` | Gerador de currículos |
+| **Samba** | `139`,`445` | Gerador de currículos |
 
 ---
 
