@@ -103,9 +103,12 @@ homelab/
 | **Homepage** | `8090` | Dashboard |
 | **Navidrome** | `4533` | Servidor de música |
 | **Portainer** | `9443` | Gerenciador Docker |
-| **Glance** | `8081` | Painel de monitoramento |
+| **Glance** | `8081` | Dashboard v2.0 |
 | **Reactive Resume** | `3002` | Gerador de currículos |
 | **Samba** | `139`,`445` | Gerador de currículos |
+| **Immch** | `not running` | Gerador de fotos |
+| **Paperless Ngx** | `not running` | Gerador de documentos |
+| **Calibre Web Automated** | `8083` | Servidor de Ebooks |
 
 ---
 
