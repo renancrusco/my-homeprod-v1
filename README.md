@@ -98,17 +98,22 @@ homelab/
 | **Radarr** | `7878` | Gerenciador de filmes |
 | **Bazarr** | `6767` | Legendas |
 | **Prowlarr** | `9696` | Indexador de torrents |
-| **Flaresolverr** | `8191` | DNS parasuite 'ARR |
+| **Flaresolverr** | `8191` | DNS|
 | **qBittorrent** | `8080` | Cliente Torrent |
+| **qui** |`7476`|Gerenciador de instancias torrent |
 | **Homepage** | `8090` | Dashboard |
 | **Navidrome** | `4533` | Servidor de música |
 | **Portainer** | `9443` | Gerenciador Docker |
+| **Beszel** |`8090`| Monitoramento de container |
+| **Netdata** |`19999`| Monitoramento |
 | **Glance** | `8081` | Dashboard v2.0 |
+| **Linkwarden** | `8084` | Bookmarks |
 | **Reactive Resume** | `3002` | Gerador de currículos |
 | **Samba** | `139`,`445` | Gerador de currículos |
 | **Immch** | `not running` | Gerador de fotos |
 | **Paperless Ngx** | `not running` | Gerador de documentos |
 | **Calibre Web Automated** | `8083` | Servidor de Ebooks |
+
 
 ---
 

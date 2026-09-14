@@ -1,0 +1,8 @@
+services:
+  qui:
+    image: ghcr.io/autobrr/qui:v1.27.0
+    user: "1000:1000"
+    volumes:
+      - ./config:/config
+    ports:
+      - "7476:7476"
