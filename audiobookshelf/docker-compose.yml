@@ -1,0 +1,16 @@
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:2.26.0
+    container_name: audiobookshelf
+    ports:
+      - 13378:80
+    volumes:
+      - ./config:/config
+      - ./metadata:/metadata
+      - /home/khrusko/homelab/media/audiobooks:/audiobooks
+      - /home/khrusko/homelab/media/podcasts:/podcasts
+    environment:
+      - TZ=America/Sao_Paulo
+      - PUID=1000
+      - PGID=1000
+    restart: unless-stopped

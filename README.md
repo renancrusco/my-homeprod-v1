@@ -113,6 +113,7 @@ homelab/
 | **Immch** | `not running` | Gerador de fotos |
 | **Paperless Ngx** | `not running` | Gerador de documentos |
 | **Calibre Web Automated** | `8083` | Servidor de Ebooks |
+| **Audiobookshelf** | `13378` | Servidor de audiobooks e podcasts |
 
 
 ---
